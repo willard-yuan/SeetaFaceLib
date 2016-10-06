@@ -1,0 +1,50 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# model
+model/seeta_fr_v1.0.bin
+model/seeta_fd_frontal_v1.0.bin
+model/seeta_fa_v1.1.bin
+
+# DerivedData
+XcodePro/DetectionAlignment/DerivedData/*
+
+FaceIdentification/data/*
+FaceIdentification/model/*.bin
+FaceIdentification/model/s*.rar
+
+# dir
+XcodePro/DetectionAlignment/DetectionAlignment/srcFA/*
+XcodePro/DetectionAlignment/DetectionAlignment/srcFD/*
+
+# DerivedData
+XcodePro/DetectionAlignment/*.dylib
+
+.DS_Store
