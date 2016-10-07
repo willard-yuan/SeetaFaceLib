@@ -58,7 +58,7 @@ using namespace seeta;
 int main(int argc, char* argv[]) {
     // Initialize face detection model
     seeta::FaceDetection detector("/Users/willard/codes/cpp/face/SeetaFaceLib/model/seeta_fd_frontal_v1.0.bin");
-    detector.SetMinFaceSize(40);
+    detector.SetMinFaceSize(20);
     detector.SetScoreThresh(2.f);
     detector.SetImagePyramidScaleFactor(0.8f);
     detector.SetWindowStep(4, 4);
@@ -92,6 +92,23 @@ int main(int argc, char* argv[]) {
     // Detect 5 facial landmarks
     seeta::FacialLandmark gallery_points[5];
     point_detector.PointDetectLandmarks(gallery_img_data_gray, gallery_faces[0], gallery_points);
+    
+    
+    
+    
+    // test crop image
+    // Create a image to store crop face.
+    cv::Mat dst_img(face_recognizer.crop_height(), face_recognizer.crop_width(), CV_8UC(face_recognizer.crop_channels()));
+    ImageData dst_img_data(dst_img.cols, dst_img.rows, dst_img.channels());
+    dst_img_data.data = dst_img.data;
+    /* Crop Face */
+    face_recognizer.CropFace(gallery_img_data_color, gallery_points, dst_img_data);
+    //Show crop face
+    cv::imshow("Crop Face", dst_img);
+    cv::waitKey(0);
+    cv::destroyWindow("Crop Face");
+    
+    
     
     // Extract face identity feature
     float gallery_fea[2048];
@@ -158,7 +175,7 @@ int main(int argc, char* argv[]) {
                 cv::putText(probe_img_color, "The same person", cv::Point(400, 100), CV_FONT_HERSHEY_SIMPLEX, 1.0, CV_RGB(255,0,0), 2.0);
         }
         
-        cv::imshow("gallery_img_color", gallery_img_color);
+        //cv::imshow("gallery_img_color", gallery_img_color);
         cv::imshow("probe_img_color", probe_img_color);
         
         cv::waitKey(1);
