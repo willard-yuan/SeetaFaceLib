@@ -11,10 +11,37 @@
 #include <iostream>
 #include <algorithm>
 
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/list.hpp>
+
+#include <sstream>
+#include <fstream>
+#include <glob.h>
+
 #define fopen_s(pFile,filename,mode) ((*(pFile))=fopen((filename),(mode)))==NULL
 
 using namespace seeta;
 using namespace std;
+
+void saveFeaturesFilePair(std::pair<vector<string>, vector<vector<float> >>  &features, string &filename){
+    ofstream out(filename.c_str());
+    stringstream ss;
+    boost::archive::binary_oarchive oa(ss);
+    oa << features.first << features.second;
+    out << ss.str();
+    out.close();
+}
+
+void loadFeaturesFilePair(std::pair<vector<string>, vector<vector<float> >> &features, string &filename){
+    ifstream in(filename.c_str());
+    boost::archive::binary_iarchive ia(in);
+    ia >> features.first >> features.second;
+    in.close();
+}
 
 bool extractFeat(seeta::FaceDetection &detector, seeta::FaceAlignment &point_detector, FaceIdentification &face_recognizer, cv::Mat &img_color, cv::Mat dst_img, float * feat){
     
@@ -52,6 +79,18 @@ bool extractFeat(seeta::FaceDetection &detector, seeta::FaceAlignment &point_det
     return true;
 }
 
+std::vector<std::string> globVector(const std::string& pattern){
+    glob_t glob_result;
+    glob(pattern.c_str(),GLOB_TILDE,NULL,&glob_result);
+    std::vector<std::string> files;
+    for(unsigned int i=0;i<glob_result.gl_pathc;++i){
+        files.push_back(std::string(glob_result.gl_pathv[i]));
+    }
+    globfree(&glob_result);
+    std::sort(files.begin(),files.end());
+    return files;
+}
+
 
 int main(int argc, char* argv[]) {
     
@@ -62,21 +101,36 @@ int main(int argc, char* argv[]) {
     detector.SetImagePyramidScaleFactor(0.8f);
     detector.SetWindowStep(4, 4);
     
+    std::pair<vector<string>, vector<vector<float> >>  namesFeats;
+    vector<vector<float> > feats;
+    
     // Initialize face alignment model
     seeta::FaceAlignment point_detector("/Users/willard/codes/cpp/face/SeetaFaceLib/model/seeta_fa_v1.1.bin");
     // Initialize face Identification model
     FaceIdentification face_recognizer("/Users/willard/codes/cpp/face/SeetaFaceLib/model/seeta_fr_v1.0.bin");
     
-    float feat[2048];
+
     cv::Mat dst_img(face_recognizer.crop_height(), face_recognizer.crop_width(), CV_8UC(face_recognizer.crop_channels()));
     
-    cv::Mat img_color = cv::imread("/Users/willard/codes/cpp/face/SeetaFaceLib/data/test_face_recognizer/compare_im/2.jpg", 1);
-    extractFeat(detector, point_detector, face_recognizer, img_color, dst_img, feat);
+    vector<string> imgNames = globVector("/Users/willard/codes/cpp/face/SeetaFaceLib/data/test_face_recognizer/images/src/*");
     
-    //Show crop face
-    cv::imshow("Crop Face", dst_img);
-    cv::waitKey(0);
-    cv::destroyWindow("Crop Face");
+    for(auto itemImg:imgNames){
+        float feat[2048];
+        
+        cv::Mat img_color = cv::imread(itemImg);
+        extractFeat(detector, point_detector, face_recognizer, img_color, dst_img, feat);
+        
+        std::vector<float> featVector(std::begin(feat), std::end(feat));
+        feats.push_back(featVector);
+        
+        //Show crop face
+        cv::imshow("Original Face", img_color);
+        cv::imshow("Crop Face", dst_img);
+        cv::waitKey(10);
+    }
+    
+    namesFeats.first = imgNames;
+    namesFeats.second = feats;
     
     return 0;
 }
