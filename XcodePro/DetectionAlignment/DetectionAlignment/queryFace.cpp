@@ -98,6 +98,22 @@ std::string base_name(std::string const & path)
 }
 
 
+// Sorted distances and keeping track of indexes
+template < typename T>
+vector<int>  sort_indexes(const vector<T>  &v) {
+    
+    // initialize original index locations
+    vector< int>  idx(v.size());
+    for (int i = 0; i != idx.size(); ++i) idx[i] = i;
+    
+    // sort indexes based on comparing values in v
+    sort(idx.begin(), idx.end(),
+         [& v](int i1, int i2) {return v[i1] <  v[i2];});
+    
+    return idx;
+}
+
+
 int main(int argc, char* argv[]) {
     
     // Initialize face detection model
@@ -108,9 +124,6 @@ int main(int argc, char* argv[]) {
     detector.SetWindowStep(4, 4);
     
     std::pair<vector<string>, vector<vector<float> >>  namesFeats;
-    vector<vector<float> > feats;
-    vector<string> imgNames_path;
-    vector<string> imgNames;
     
     // Initialize face alignment model and face Identification model
     seeta::FaceAlignment point_detector("/Users/willard/codes/cpp/face/SeetaFaceLib/model/seeta_fa_v1.1.bin");
@@ -118,45 +131,27 @@ int main(int argc, char* argv[]) {
     
     cv::Mat dst_img(face_recognizer.crop_height(), face_recognizer.crop_width(), CV_8UC(face_recognizer.crop_channels()));
     
-    // Original faces
-    imgNames_path = globVector("/Users/willard/codes/cpp/face/SeetaFaceLib/data/test_face_recognizer/images/src/*");
-    
     // Save Cropped faces
     string path_imgCroppedNames = "/Users/willard/Pictures/SeetaFaces/";
+    
+    // Load image names and features
+    string filenamePair = "namesFeats.bin";
+    loadFeaturesFilePair(namesFeats, filenamePair);
 
+    // Extract query face image feature
+    float queryFeat[2048];
+    cv::Mat queryImg_color = cv::imread("/Users/willard/Pictures/SeetaFaces/NF_200001_001.jpg");
+    extractFeat(detector, point_detector, face_recognizer, queryImg_color, dst_img, queryFeat);
     
-    printf("Start extract features of face images, total %d face images\n", (int)imgNames_path.size());
-    
-    int img_idx = 0;
-    
-    for(auto itemImg_path:imgNames_path){
-        float feat[2048];
-        
-        cv::Mat img_color = cv::imread(itemImg_path);
-        extractFeat(detector, point_detector, face_recognizer, img_color, dst_img, feat);
-        
-        std::vector<float> featVector(std::begin(feat), std::end(feat));
-        feats.push_back(featVector);
-        
-        std::string imgName = base_name(itemImg_path);
-        imgNames.push_back(imgName);
-        
-        printf("%s extracted, (%d/%d) face images\n", imgName.c_str(), ++img_idx, (int)imgNames_path.size());
-        
-        cv::imwrite(path_imgCroppedNames+imgName.c_str(), dst_img);
-        
-        // Show crop face
-        /*cv::imshow("Original Face", img_color);
-        cv::imshow("Crop Face", dst_img);
-        cv::waitKey(10);*/
+    // Calculate cosine distance between query and data base faces
+    vector<float> cosine_dists;
+    for(auto featItem: namesFeats.second){
+        // http://stackoverflow.com/questions/2923272/how-to-convert-vector-to-array-c
+        float tmp_cosine_dist = face_recognizer.CalcSimilarity(queryFeat, &featItem[0]);
+        cosine_dists.push_back(tmp_cosine_dist);
     }
     
-    namesFeats.first = imgNames_path;
-    namesFeats.second = feats;
-    
-    // Save image names and features
-    string filenamePair = "namesFeats.bin";
-    saveFeaturesFilePair(namesFeats, filenamePair);
+    vector<int> sorted_idx = sort_indexes(cosine_dists);
     
     return 0;
 }
