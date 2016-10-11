@@ -121,7 +121,7 @@
 		5C0DFB561DAA996700AECD4E /* libboost_wserialization-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C0DFAE01DAA996700AECD4E /* libboost_wserialization-mt.dylib */; };
 		5C0DFB571DAA996700AECD4E /* libboost_wserialization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C0DFAE11DAA996700AECD4E /* libboost_wserialization.a */; };
 		5C0DFB581DAA996700AECD4E /* libboost_wserialization.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C0DFAE21DAA996700AECD4E /* libboost_wserialization.dylib */; };
-		5C50F48F1DABEF07006E5BED /* queryFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C50F48E1DABEF07006E5BED /* queryFace.cpp */; };
+		5C4AF9981DAD426800CE4CF0 /* queryFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AF9971DAD426800CE4CF0 /* queryFace.cpp */; };
 		5C94C9F71D8D9117003880FA /* libopencv_calib3d.2.4.12.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C94C9C01D8D9117003880FA /* libopencv_calib3d.2.4.12.dylib */; };
 		5C94C9F81D8D9117003880FA /* libopencv_contrib.2.4.12.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C94C9C11D8D9117003880FA /* libopencv_contrib.2.4.12.dylib */; };
 		5C94C9F91D8D9117003880FA /* libopencv_core.2.4.12.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C94C9C21D8D9117003880FA /* libopencv_core.2.4.12.dylib */; };
@@ -322,7 +322,7 @@
 		5C0DFAE01DAA996700AECD4E /* libboost_wserialization-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libboost_wserialization-mt.dylib"; sourceTree = "<group>"; };
 		5C0DFAE11DAA996700AECD4E /* libboost_wserialization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_wserialization.a; sourceTree = "<group>"; };
 		5C0DFAE21DAA996700AECD4E /* libboost_wserialization.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libboost_wserialization.dylib; sourceTree = "<group>"; };
-		5C50F48E1DABEF07006E5BED /* queryFace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = queryFace.cpp; sourceTree = "<group>"; };
+		5C4AF9971DAD426800CE4CF0 /* queryFace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = queryFace.cpp; sourceTree = "<group>"; };
 		5C94C9931D8D9036003880FA /* DetectionAlignment */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DetectionAlignment; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C94C9C01D8D9117003880FA /* libopencv_calib3d.2.4.12.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_calib3d.2.4.12.dylib; sourceTree = "<group>"; };
 		5C94C9C11D8D9117003880FA /* libopencv_contrib.2.4.12.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_contrib.2.4.12.dylib; sourceTree = "<group>"; };
@@ -722,7 +722,7 @@
 		5C94C9951D8D9036003880FA /* DetectionAlignment */ = {
 			isa = PBXGroup;
 			children = (
-				5C50F48E1DABEF07006E5BED /* queryFace.cpp */,
+				5C4AF9971DAD426800CE4CF0 /* queryFace.cpp */,
 				5CDC4DC41D903DD4007558D0 /* srcFA */,
 				5CDC4DA91D903DC6007558D0 /* srcFD */,
 			);
@@ -919,7 +919,7 @@
 				5CDC4DBA1D903DC6007558D0 /* mlp.cpp in Sources */,
 				5CDC4DBD1D903DC6007558D0 /* lab_feature_map.cpp in Sources */,
 				5CDC4DC81D903DD4007558D0 /* cfan.cpp in Sources */,
-				5C50F48F1DABEF07006E5BED /* queryFace.cpp in Sources */,
+				5C4AF9981DAD426800CE4CF0 /* queryFace.cpp in Sources */,
 				5CDC4DBC1D903DC6007558D0 /* face_detection.cpp in Sources */,
 				5CDC4DC01D903DC6007558D0 /* lab_boost_model_reader.cpp in Sources */,
 				5CDC4DC11D903DC6007558D0 /* surf_mlp_model_reader.cpp in Sources */,

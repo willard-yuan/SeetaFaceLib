@@ -151,7 +151,7 @@ int main(int argc, char* argv[]) {
         cv::waitKey(10);*/
     }
     
-    namesFeats.first = imgNames_path;
+    namesFeats.first = imgNames;
     namesFeats.second = feats;
     
     // Save image names and features

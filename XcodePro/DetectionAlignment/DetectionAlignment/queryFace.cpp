@@ -97,23 +97,6 @@ std::string base_name(std::string const & path)
     return path.substr(path.find_last_of("/\\") + 1);
 }
 
-
-// Sorted distances and keeping track of indexes
-template < typename T>
-vector<int>  sort_indexes(const vector<T>  &v) {
-    
-    // initialize original index locations
-    vector< int>  idx(v.size());
-    for (int i = 0; i != idx.size(); ++i) idx[i] = i;
-    
-    // sort indexes based on comparing values in v
-    sort(idx.begin(), idx.end(),
-         [& v](int i1, int i2) {return v[i1] <  v[i2];});
-    
-    return idx;
-}
-
-
 int main(int argc, char* argv[]) {
     
     // Initialize face detection model
@@ -144,14 +127,20 @@ int main(int argc, char* argv[]) {
     extractFeat(detector, point_detector, face_recognizer, queryImg_color, dst_img, queryFeat);
     
     // Calculate cosine distance between query and data base faces
-    vector<float> cosine_dists;
+    vector<pair<float,size_t> > dists_idxs;
+    int i = 0;
     for(auto featItem: namesFeats.second){
         // http://stackoverflow.com/questions/2923272/how-to-convert-vector-to-array-c
         float tmp_cosine_dist = face_recognizer.CalcSimilarity(queryFeat, &featItem[0]);
-        cosine_dists.push_back(tmp_cosine_dist);
+        dists_idxs.push_back(std::make_pair(tmp_cosine_dist, i++));
     }
     
-    vector<int> sorted_idx = sort_indexes(cosine_dists);
+    // Sorting will put lower values ahead of larger ones, resolving ties using the original index
+    std::sort(dists_idxs.begin(), dists_idxs.end());
+    std::reverse(dists_idxs.begin(), dists_idxs.end());
+    for (size_t i = 0 ; i != dists_idxs.size() ; i++) {
+        printf("distance: %f, face image: %s\n", dists_idxs[i].first, namesFeats.first.at(dists_idxs[i].second).c_str());
+    }
     
     return 0;
 }
