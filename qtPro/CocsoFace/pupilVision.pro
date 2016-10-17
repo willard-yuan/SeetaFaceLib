@@ -12,7 +12,7 @@ QMAKE_CXXFLAGS += -msse -msse2 -msse3 -mssse3
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = pupilVision
+TARGET = CocsoSearch
 TEMPLATE = app
 
 SOURCES += main.cpp\
@@ -32,11 +32,13 @@ SOURCES += main.cpp\
     ../../../cpp/face/SeetaFaceLib/FaceDetection/srcFD/util/image_pyramid.cpp \
     ../../../cpp/face/SeetaFaceLib/FaceDetection/srcFD/util/nms.cpp \
     ../../../cpp/face/SeetaFaceLib/FaceDetection/srcFD/face_detection.cpp \
-    ../../../cpp/face/SeetaFaceLib/FaceDetection/srcFD/fust.cpp
+    ../../../cpp/face/SeetaFaceLib/FaceDetection/srcFD/fust.cpp \
+    src/extractFeats.cpp
 
 HEADERS  += mainwindow.h \
     videohandler.h \
-    helper.h
+    helper.h \
+    src/extractFeats.h
 
 FORMS    += \
     mainwindow.ui
@@ -52,7 +54,7 @@ INCLUDEPATH += /Users/willard/codes/cpp/face/SeetaFaceLib/FaceAlignment/include
 INCLUDEPATH += /Users/willard/codes/cpp/face/SeetaFaceLib/FaceDetection/include
 INCLUDEPATH += /Users/willard/codes/cpp/face/SeetaFaceLib/FaceIdentification/include
 
-LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_video -lopencv_photo -ltbb -ltbbmalloc -ltbbmalloc_proxy
+LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_video -lopencv_photo -ltbb -ltbbmalloc -ltbbmalloc_proxy -lboost_iostreams -lboost_serialization
 
 # face lib
 LIBS += /Users/willard/codes/cpp/face/SeetaFaceLib/FaceIdentification/lib/libviplnet.4.5.dylib
@@ -167,4 +169,16 @@ DISTFILES += \
     MetroMumble/MetroLite.qss \
     MetroMumble/overlay.mumblelay \
     MetroMumble/theme.ini \
-    MetroMumble/README.md
+    MetroMumble/README.md \
+    MetroMumble/OSX/OSX Dark.qss \
+    MetroMumble/OSX/OSX Lite.qss \
+    MetroMumble/osx source/OSX Dark.scss \
+    MetroMumble/osx source/OSX Lite.scss \
+    MetroMumble/OSX/OSX Dark.qss \
+    MetroMumble/OSX/OSX Lite.qss \
+    MetroMumble/osx source/OSX Dark.scss \
+    MetroMumble/osx source/OSX Lite.scss \
+    MetroMumble/OSX/OSX Dark.qss \
+    MetroMumble/OSX/OSX Lite.qss \
+    MetroMumble/osx source/OSX Dark.scss \
+    MetroMumble/osx source/OSX Lite.scss

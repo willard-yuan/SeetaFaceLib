@@ -177,7 +177,6 @@
 		5C94CA2B1D8D9117003880FA /* libopencv_video.2.4.12.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C94C9F41D8D9117003880FA /* libopencv_video.2.4.12.dylib */; };
 		5C94CA2C1D8D9117003880FA /* libopencv_videostab.2.4.12.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C94C9F51D8D9117003880FA /* libopencv_videostab.2.4.12.dylib */; };
 		5C94CA2D1D8D9117003880FA /* libopencv_videostab.2.4.12.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C94C9F61D8D9117003880FA /* libopencv_videostab.2.4.12.dylib */; };
-		5CBC94781DAE8EDF002F43D9 /* extractFeats.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CBC94771DAE8EDF002F43D9 /* extractFeats.cpp */; };
 		5CDC4DB91D903DC6007558D0 /* lab_boosted_classifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CDC4DAB1D903DC6007558D0 /* lab_boosted_classifier.cpp */; };
 		5CDC4DBA1D903DC6007558D0 /* mlp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CDC4DAC1D903DC6007558D0 /* mlp.cpp */; };
 		5CDC4DBB1D903DC6007558D0 /* surf_mlp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CDC4DAD1D903DC6007558D0 /* surf_mlp.cpp */; };
@@ -380,7 +379,6 @@
 		5C94C9F41D8D9117003880FA /* libopencv_video.2.4.12.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_video.2.4.12.dylib; sourceTree = "<group>"; };
 		5C94C9F51D8D9117003880FA /* libopencv_videostab.2.4.12.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_videostab.2.4.12.dylib; sourceTree = "<group>"; };
 		5C94C9F61D8D9117003880FA /* libopencv_videostab.2.4.12.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libopencv_videostab.2.4.12.dylib; sourceTree = "<group>"; };
-		5CBC94771DAE8EDF002F43D9 /* extractFeats.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extractFeats.cpp; sourceTree = "<group>"; };
 		5CDC4DAB1D903DC6007558D0 /* lab_boosted_classifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lab_boosted_classifier.cpp; sourceTree = "<group>"; };
 		5CDC4DAC1D903DC6007558D0 /* mlp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mlp.cpp; sourceTree = "<group>"; };
 		5CDC4DAD1D903DC6007558D0 /* surf_mlp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = surf_mlp.cpp; sourceTree = "<group>"; };
@@ -725,7 +723,6 @@
 			isa = PBXGroup;
 			children = (
 				5C4AF9971DAD426800CE4CF0 /* queryFace.cpp */,
-				5CBC94771DAE8EDF002F43D9 /* extractFeats.cpp */,
 				5CDC4DC41D903DD4007558D0 /* srcFA */,
 				5CDC4DA91D903DC6007558D0 /* srcFD */,
 			);
@@ -934,7 +931,6 @@
 				5CDC4DB91D903DC6007558D0 /* lab_boosted_classifier.cpp in Sources */,
 				5CDC4DC21D903DC6007558D0 /* image_pyramid.cpp in Sources */,
 				5CDC4DBE1D903DC6007558D0 /* surf_feature_map.cpp in Sources */,
-				5CBC94781DAE8EDF002F43D9 /* extractFeats.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
