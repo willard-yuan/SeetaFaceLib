@@ -86,7 +86,10 @@ void MainWindow::initForm()
     ui->rMaxHorizontalSlider->setMaximum(110);
     ui->culrrentRadius->setText(QString::number(20));
 
-    this->ImagePyramidScaleFactor = 1.0f; // 采样率
+    this->ImagePyramidScaleFactor = 10; // 采样率
+    ui->ScaleFactorQSlider->setMinimum(1);
+    ui->ScaleFactorQSlider->setMaximum(10);
+    ui->culrrentScaleFactorQLabel->setText(QString::number(1.0));
 
 
     // Initialize face detection model
@@ -221,13 +224,13 @@ void MainWindow::on_startButton_toggled(bool checked)
         videoHandler.start(0);
         processTimer.start(PROCESS_TIMEOUT);
         ui->videoCanvas->setHidden(false);
-        ui->calibrateButton->setEnabled(true);
+        ui->ImgsOpenButton->setEnabled(true);
     }else{
-        if (ui->calibrateButton->isChecked())
+        if (ui->ImgsOpenButton->isChecked())
         {
-            ui->calibrateButton->click();
+            ui->ImgsOpenButton->click();
         }
-        ui->calibrateButton->setEnabled(true);
+        ui->ImgsOpenButton->setEnabled(true);
 
         // switching the video OFF
         qDebug("video: OFF");
@@ -243,6 +246,14 @@ void MainWindow::on_rMaxHorizontalSlider_valueChanged(int value)
     this->MinFaceSize = ui->rMaxHorizontalSlider->value();
     //qDebug() << "rMax: " << this->Radius_Max;
     ui->culrrentRadius->setText(QString::number(this->MinFaceSize));
+}
+
+
+void MainWindow::on_ScaleFactorQSlider_valueChanged(int value)
+{
+    this->ImagePyramidScaleFactor = ui->ScaleFactorQSlider->value();
+    ui->culrrentScaleFactorQLabel->setText(QString::number(0.1*this->ImagePyramidScaleFactor));
+
 }
 
 
@@ -262,16 +273,16 @@ void MainWindow::on_testButton_toggled(bool checked)
     }
 }
 
-void MainWindow::on_calibrateButton_toggled(bool checked)
+void MainWindow::on_ImgsOpenButton_clicked(bool checked)
 {
     if(checked){
         dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-        qDebug() << dir;
+        // qDebug() << dir;
         QDir export_folder(dir);
         export_folder.setNameFilters(QStringList()<<"*.jpg");
         imgNamesQString = export_folder.entryList();
-        for ( QStringList::Iterator it = imgNamesQString.begin(); it != imgNamesQString.end(); ++it )
-            qDebug() << "Processed command: " << *it;
+        // for ( QStringList::Iterator it = imgNamesQString.begin(); it != imgNamesQString.end(); ++it )
+            // qDebug() << "Processed command: " << *it;
         QStringListModel *model = new QStringListModel(this);
         // Populate our model
         model->setStringList(imgNamesQString);
@@ -293,11 +304,11 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
     QPixmap imgCropped(imgNameCropped);
     ui->cropImgLabel->setPixmap(imgCropped.scaled(200, 200));
 
-    for ( QStringList::Iterator it = imgNamesQString.begin(); it != imgNamesQString.end(); ++it ){
+    /* for ( QStringList::Iterator it = imgNamesQString.begin(); it != imgNamesQString.end(); ++it ){
         QString tmpImgName = dir + '/' + *it;
         m_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName),*it));
     }
-    ui->scrlArea->setWidget(m_listeWidget);
+    ui->scrlArea->setWidget(m_listeWidget);*/
 }
 
 void MainWindow::on_faceDetectionButton_clicked(bool checked)
@@ -337,7 +348,7 @@ void MainWindow::on_faceDetectionButton_clicked(bool checked)
     }
 }
 
-void MainWindow::on_queryButton_toggled(bool checked)
+void MainWindow::on_queryButton_clicked(bool checked)
 {
     if(checked){
         QString path_queryImg = QFileDialog::getOpenFileName(this, "打开图像", QDir::currentPath(), "Document files (*.jpg *.png);;All files(*.*)");
@@ -378,5 +389,7 @@ void MainWindow::on_queryButton_toggled(bool checked)
         ui->cropImgLabel->setPixmap(QPixmap::fromImage(Helper::mat2qimage(dst_img)).scaled(320, 240));
 
         ui->scrlArea->setWidget(imgs_listeWidget);
+    } else {
+        qDebug() << "you don't open a query";
     }
 }

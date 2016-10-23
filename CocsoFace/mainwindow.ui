@@ -32,183 +32,10 @@
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>0</y>
-      <width>561</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>图库面板</string>
-    </property>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>541</width>
-       <height>194</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="previewImg">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(200, 200, 200);
-border-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(255, 235, 235, 206), stop:0.35 rgba(255, 188, 188, 80), stop:0.4 rgba(255, 162, 162, 80), stop:0.425 rgba(255, 132, 132, 156), stop:0.44 rgba(252, 128, 128, 80), stop:1 rgba(255, 255, 255, 0));
-color: rgba(53, 57, 59, 128);</string>
-        </property>
-        <property name="text">
-         <string>显示区域</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="cropImgLabel">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(200, 200, 200);
-border-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(255, 235, 235, 206), stop:0.35 rgba(255, 188, 188, 80), stop:0.4 rgba(255, 162, 162, 80), stop:0.425 rgba(255, 132, 132, 156), stop:0.44 rgba(252, 128, 128, 80), stop:1 rgba(255, 255, 255, 0));
-color: rgba(53, 57, 59, 128);</string>
-        </property>
-        <property name="text">
-         <string>显示区域</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QPushButton" name="faceDetectionButton">
-     <property name="geometry">
-      <rect>
-       <x>145</x>
-       <y>240</y>
-       <width>130</width>
-       <height>48</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>建立索引</string>
-     </property>
-     <property name="icon">
-      <iconset resource="design.qrc">
-       <normaloff>:/icons/calibrate1.png</normaloff>:/icons/calibrate1.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="queryButton">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>240</y>
-       <width>130</width>
-       <height>48</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>搜索</string>
-     </property>
-     <property name="icon">
-      <iconset resource="design.qrc">
-       <normaloff>:/icons/tracking.png</normaloff>:/icons/tracking.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="calibrateButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>240</y>
-       <width>130</width>
-       <height>48</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>打开图库</string>
-     </property>
-     <property name="icon">
-      <iconset resource="design.qrc">
-       <normaloff>:/icons/calibrate1.png</normaloff>:/icons/calibrate1.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>2</width>
-      <height>2</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_2"/>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>2</width>
-      <height>2</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout"/>
-   </widget>
    <widget class="QScrollArea" name="scrlArea">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>270</x>
       <y>300</y>
       <width>761</width>
       <height>431</height>
@@ -231,188 +58,14 @@ color: rgba(53, 57, 59, 128);</string>
        <height>429</height>
       </rect>
      </property>
+     <zorder>culrrentRadius</zorder>
+     <zorder>radiusMax</zorder>
+     <zorder>similarityLabel</zorder>
+     <zorder>rMaxHorizontalSlider</zorder>
+     <zorder>sameIDtextBrowser</zorder>
+     <zorder>sameID</zorder>
+     <zorder>similaritytextBrowser</zorder>
     </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>285</x>
-      <y>0</y>
-      <width>181</width>
-      <height>291</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="title">
-     <string>参数面板</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-    <widget class="QLabel" name="culrrentRadius">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>70</y>
-       <width>31</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>尺寸</string>
-     </property>
-    </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>90</y>
-       <width>151</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="radiusMax">
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="text">
-         <string>最小人脸</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-        <property name="indent">
-         <number>7</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSlider" name="rMaxHorizontalSlider">
-        <property name="font">
-         <font>
-          <pointsize>15</pointsize>
-         </font>
-        </property>
-        <property name="toolTipDuration">
-         <number>-2</number>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="minimum">
-         <number>20</number>
-        </property>
-        <property name="maximum">
-         <number>100</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="invertedAppearance">
-         <bool>false</bool>
-        </property>
-        <property name="invertedControls">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QLabel" name="similarityLabel">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>165</y>
-       <width>46</width>
-       <height>19</height>
-      </rect>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>相似度</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-     <property name="indent">
-      <number>7</number>
-     </property>
-    </widget>
-    <widget class="QTextBrowser" name="similaritytextBrowser">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>160</y>
-       <width>90</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-    </widget>
-    <widget class="QLabel" name="sameID">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>228</y>
-       <width>59</width>
-       <height>19</height>
-      </rect>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>同一个人</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-     <property name="indent">
-      <number>7</number>
-     </property>
-    </widget>
-    <widget class="QTextBrowser" name="sameIDtextBrowser">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>221</y>
-       <width>90</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-    </widget>
-    <zorder>similarityLabel</zorder>
-    <zorder>similaritytextBrowser</zorder>
-    <zorder>sameID</zorder>
-    <zorder>sameIDtextBrowser</zorder>
-    <zorder>layoutWidget</zorder>
-    <zorder>culrrentRadius</zorder>
    </widget>
    <widget class="QGroupBox" name="recordGroup">
     <property name="enabled">
@@ -422,7 +75,7 @@ color: rgba(53, 57, 59, 128);</string>
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>261</width>
+      <width>251</width>
       <height>731</height>
      </rect>
     </property>
@@ -433,7 +86,7 @@ color: rgba(53, 57, 59, 128);</string>
      </sizepolicy>
     </property>
     <property name="title">
-     <string>显示面板</string>
+     <string>人脸识别</string>
     </property>
     <property name="flat">
      <bool>false</bool>
@@ -472,7 +125,7 @@ color: rgba(53, 57, 59, 128);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>240</y>
+       <y>460</y>
        <width>231</width>
        <height>48</height>
       </rect>
@@ -481,7 +134,7 @@ color: rgba(53, 57, 59, 128);</string>
       <item row="0" column="0">
        <widget class="QPushButton" name="startButton">
         <property name="text">
-         <string>开始</string>
+         <string>注册</string>
         </property>
         <property name="icon">
          <iconset resource="design.qrc">
@@ -501,7 +154,7 @@ color: rgba(53, 57, 59, 128);</string>
       <item row="0" column="1">
        <widget class="QPushButton" name="testButton">
         <property name="text">
-         <string>测试</string>
+         <string>识别</string>
         </property>
         <property name="icon">
          <iconset resource="design.qrc">
@@ -520,23 +173,449 @@ color: rgba(53, 57, 59, 128);</string>
       </item>
      </layout>
     </widget>
-    <widget class="QListView" name="listView">
+    <widget class="QLabel" name="culrrentRadius">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>530</y>
+       <width>31</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>尺寸</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="radiusMax">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>528</y>
+       <width>59</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>最小人脸</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="indent">
+      <number>7</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="similarityLabel">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>640</y>
+       <width>46</width>
+       <height>19</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>相似度</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="indent">
+      <number>7</number>
+     </property>
+    </widget>
+    <widget class="QSlider" name="rMaxHorizontalSlider">
+     <property name="geometry">
+      <rect>
+       <x>78</x>
+       <y>532</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="toolTipDuration">
+      <number>-2</number>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="minimum">
+      <number>20</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="invertedControls">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QTextBrowser" name="sameIDtextBrowser">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>660</y>
+       <width>90</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="sameID">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>640</y>
+       <width>59</width>
+       <height>19</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>同一个人</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="indent">
+      <number>7</number>
+     </property>
+    </widget>
+    <widget class="QTextBrowser" name="similaritytextBrowser">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>660</y>
+       <width>90</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="radiusMax_2">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>568</y>
+       <width>59</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="text">
+      <string>采样率</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="indent">
+      <number>7</number>
+     </property>
+    </widget>
+    <widget class="QSlider" name="ScaleFactorQSlider">
+     <property name="geometry">
+      <rect>
+       <x>78</x>
+       <y>572</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="toolTipDuration">
+      <number>-2</number>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>10</number>
+     </property>
+     <property name="singleStep">
+      <number>1</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="invertedControls">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="culrrentScaleFactorQLabel">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>570</y>
+       <width>31</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>尺寸</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="cropImgRecLabel">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>530</y>
-       <width>241</width>
-       <height>192</height>
+       <y>240</y>
+       <width>231</width>
+       <height>209</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(200, 200, 200);
+border-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(255, 235, 235, 206), stop:0.35 rgba(255, 188, 188, 80), stop:0.4 rgba(255, 162, 162, 80), stop:0.425 rgba(255, 132, 132, 156), stop:0.44 rgba(252, 128, 128, 80), stop:1 rgba(255, 255, 255, 0));
+color: rgba(53, 57, 59, 128);</string>
+     </property>
+     <property name="text">
+      <string>显示区域</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <zorder>videoCanvas</zorder>
+    <zorder>layoutWidget</zorder>
+    <zorder>culrrentRadius</zorder>
+    <zorder>radiusMax</zorder>
+    <zorder>similarityLabel</zorder>
+    <zorder>rMaxHorizontalSlider</zorder>
+    <zorder>sameIDtextBrowser</zorder>
+    <zorder>sameID</zorder>
+    <zorder>similaritytextBrowser</zorder>
+    <zorder>radiusMax</zorder>
+    <zorder>similarityLabel</zorder>
+    <zorder>rMaxHorizontalSlider</zorder>
+    <zorder>sameIDtextBrowser</zorder>
+    <zorder>sameID</zorder>
+    <zorder>similaritytextBrowser</zorder>
+    <zorder>radiusMax_2</zorder>
+    <zorder>ScaleFactorQSlider</zorder>
+    <zorder>culrrentScaleFactorQLabel</zorder>
+    <zorder>cropImgRecLabel</zorder>
+   </widget>
+   <widget class="QPushButton" name="ImgsOpenButton">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>240</y>
+      <width>130</width>
+      <height>48</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>打开图库</string>
+    </property>
+    <property name="icon">
+     <iconset resource="design.qrc">
+      <normaloff>:/icons/calibrate1.png</normaloff>:/icons/calibrate1.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="faceDetectionButton">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>240</y>
+      <width>130</width>
+      <height>48</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>建立索引</string>
+    </property>
+    <property name="icon">
+     <iconset resource="design.qrc">
+      <normaloff>:/icons/calibrate1.png</normaloff>:/icons/calibrate1.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="queryButton">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>240</y>
+      <width>130</width>
+      <height>48</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>搜索</string>
+    </property>
+    <property name="icon">
+     <iconset resource="design.qrc">
+      <normaloff>:/icons/tracking.png</normaloff>:/icons/tracking.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>0</y>
+      <width>761</width>
+      <height>291</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>人脸检索</string>
+    </property>
+    <widget class="QLabel" name="cropImgLabel">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>20</y>
+       <width>261</width>
+       <height>211</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(200, 200, 200);
+border-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(255, 235, 235, 206), stop:0.35 rgba(255, 188, 188, 80), stop:0.4 rgba(255, 162, 162, 80), stop:0.425 rgba(255, 132, 132, 156), stop:0.44 rgba(252, 128, 128, 80), stop:1 rgba(255, 255, 255, 0));
+color: rgba(53, 57, 59, 128);</string>
+     </property>
+     <property name="text">
+      <string>显示区域</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="previewImg">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>20</y>
+       <width>261</width>
+       <height>211</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(200, 200, 200);
+border-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(255, 235, 235, 206), stop:0.35 rgba(255, 188, 188, 80), stop:0.4 rgba(255, 162, 162, 80), stop:0.425 rgba(255, 132, 132, 156), stop:0.44 rgba(252, 128, 128, 80), stop:1 rgba(255, 255, 255, 0));
+color: rgba(53, 57, 59, 128);</string>
+     </property>
+     <property name="text">
+      <string>显示区域</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QListView" name="listView">
+     <property name="geometry">
+      <rect>
+       <x>15</x>
+       <y>20</y>
+       <width>191</width>
+       <height>211</height>
       </rect>
      </property>
     </widget>
+    <zorder>cropImgLabel</zorder>
+    <zorder>previewImg</zorder>
+    <zorder>listView</zorder>
+    <zorder>queryButton</zorder>
+    <zorder>faceDetectionButton</zorder>
    </widget>
-   <zorder>recordGroup</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>groupBox_2</zorder>
-   <zorder>scrlArea</zorder>
    <zorder>groupBox</zorder>
+   <zorder>recordGroup</zorder>
+   <zorder>scrlArea</zorder>
+   <zorder>ImgsOpenButton</zorder>
+   <zorder>faceDetectionButton</zorder>
+   <zorder>queryButton</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">

@@ -89,10 +89,11 @@ private slots:
     void on_startButton_toggled(bool checked);
     void on_rMaxHorizontalSlider_valueChanged(int value);
     void on_testButton_toggled(bool checked);
-    void on_calibrateButton_toggled(bool checked);
     void on_listView_clicked(const QModelIndex &index);
     void on_faceDetectionButton_clicked(bool checked);
-    void on_queryButton_toggled(bool checked);
+    void on_ImgsOpenButton_clicked(bool checked);
+    void on_queryButton_clicked(bool checked);
+    void on_ScaleFactorQSlider_valueChanged(int value);
 };
 
 #endif // MAINWINDOW_H
