@@ -429,23 +429,24 @@ void MainWindow::on_queryButton_clicked(bool checked)
             imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(idxCandidate[i]).c_str())));
         }
 
-        //        // Calculate cosine distance between query and data base faces
-        //        std::vector<std::pair<float, size_t> > dists_idxs;
-        //        int i = 0;
-        //        for(auto featItem: namesFeats.second){
-        //            // http://stackoverflow.com/questions/2923272/how-to-convert-vector-to-array-c
-        //            float tmp_cosine_dist = face_recognizer->CalcSimilarity(query_feat, &featItem[0]);
-        //            dists_idxs.push_back(std::make_pair(tmp_cosine_dist, i++));
-        //        }
+        // slow index
+//        // Calculate cosine distance between query and data base faces
+//        std::vector<std::pair<float, size_t> > dists_idxs;
+//        int i = 0;
+//        for(auto featItem: namesFeats.second){
+//            // http://stackoverflow.com/questions/2923272/how-to-convert-vector-to-array-c
+//            float tmp_cosine_dist = face_recognizer->CalcSimilarity(query_feat, &featItem[0]);
+//            dists_idxs.push_back(std::make_pair(tmp_cosine_dist, i++));
+//        }
 
-        //        std::sort(dists_idxs.begin(), dists_idxs.end());
-        //        std::reverse(dists_idxs.begin(), dists_idxs.end());
+//        std::sort(dists_idxs.begin(), dists_idxs.end());
+//        std::reverse(dists_idxs.begin(), dists_idxs.end());
 
-        //        for (size_t i = 0 ; i != dists_idxs.size() ; i++) {
-        //           //qDebug()<<dists_idxs[i].first<<namesFeats.first.at(dists_idxs[i].second).c_str();
-        //           QString tmpImgName = dir + '/' + namesFeats.first.at(dists_idxs[i].second).c_str();
-        //           imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(dists_idxs[i].second).c_str())));
-        //        }
+//        for (size_t i = 0 ; i != dists_idxs.size() ; i++) {
+//            //qDebug()<<dists_idxs[i].first<<namesFeats.first.at(dists_idxs[i].second).c_str();
+//            QString tmpImgName = dir + '/' + namesFeats.first.at(dists_idxs[i].second).c_str();
+//            imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(dists_idxs[i].second).c_str())));
+//        }
 
         ui->previewImg->setPixmap(QPixmap::fromImage(Helper::mat2qimage(img_color)).scaled(320, 240));
         ui->cropImgLabel->setPixmap(QPixmap::fromImage(Helper::mat2qimage(dst_img)).scaled(320, 240));
