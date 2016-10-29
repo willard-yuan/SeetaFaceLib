@@ -54,6 +54,12 @@ INCLUDEPATH += ../FaceLib/FaceAlignment/include
 INCLUDEPATH += ../FaceLib/FaceDetection/include
 INCLUDEPATH += ../FaceLib/FaceIdentification/include
 
+# falconn include
+INCLUDEPATH += /Users/willard/codes/cpp/cbir/FALCONN/src/include
+
+# eigen include
+INCLUDEPATH += /Users/willard/codes/cpp/cbir/FALCONN/external/eigen
+
 LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_video -lopencv_photo -lboost_iostreams -lboost_serialization
 
 # face lib

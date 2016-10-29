@@ -11,6 +11,9 @@
 #include "face_detection.h"
 #include "face_alignment.h"
 
+#include "falconn/eigen_wrapper.h"
+#include "falconn/lsh_nn_table.h"
+
 #include <QDesktopWidget>
 #include <QStringListModel>
 #include <QListWidget>
@@ -18,6 +21,15 @@
 #include <src/extractFeats.h>
 
 using namespace seeta;
+
+using falconn::construct_table;
+using falconn::DenseVector;
+using falconn::DistanceFunction;
+using falconn::LSHConstructionParameters;
+using falconn::LSHFamily;
+using falconn::LSHNearestNeighborTable;
+using falconn::QueryStatistics;
+using falconn::StorageHashTable;
 
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -359,7 +371,57 @@ void MainWindow::on_queryButton_clicked(bool checked)
         cv::Mat img_color = cv::imread(path_queryImg.toStdString());
         featExtractor->extractFeat(face_detector, point_detector, face_recognizer, img_color, dst_img, query_feat);
 
-        if(namesFeats.first.empty()) featExtractor->loadFeaturesFilePair(namesFeats, path_namesFeats);
+
+        falconn::DenseVector<float> q = Eigen::VectorXf::Map(&query_feat[0], 2048);
+        q.normalize();
+
+        if(namesFeats.first.empty()){
+            featExtractor->loadFeaturesFilePair(namesFeats, path_namesFeats);
+
+            int numFeats = (int)namesFeats.first.size();
+            int dim = (int)namesFeats.second[0].size();
+
+            // Data set parameters
+            int num_queries = 5;           // number of query points
+            double r = std::sqrt(2.0) / 2.0;  // distance to planted query
+            uint64_t seed = 119417657;
+
+            // Common LSH parameters
+            int num_tables = 8;
+            int num_setup_threads = 0;
+            StorageHashTable storage_hash_table = StorageHashTable::FlatHashTable;
+            DistanceFunction distance_function = DistanceFunction::NegativeInnerProduct;
+
+            // 转换数据类型
+            qDebug() << "Generating data set ...";
+            std::vector<falconn::DenseVector<float>> data;
+            for (int ii = 0; ii < numFeats; ++ii) {
+                falconn::DenseVector<float> v = Eigen::VectorXf::Map(&namesFeats.second[ii][0], dim);
+                v.normalize(); // L2归一化
+                data.push_back(v);
+            }
+
+            // Cross polytope hashing
+            LSHConstructionParameters params_cp;
+            params_cp.dimension = dim;
+            params_cp.lsh_family = LSHFamily::CrossPolytope;
+            params_cp.distance_function = distance_function;
+            params_cp.storage_hash_table = storage_hash_table;
+            params_cp.k = 2; // 每个哈希表的哈希函数数目
+            params_cp.l = num_tables; // 哈希表数目
+            params_cp.last_cp_dimension = 2;
+            params_cp.num_rotations = 2;
+            params_cp.num_setup_threads = num_setup_threads;
+            params_cp.seed = seed ^ 833840234;
+
+            unique_ptr<LSHNearestNeighborTable<falconn::DenseVector<float>>> cptable(std::move(construct_table<falconn::DenseVector<float>>(data, params_cp)));
+            cptable->set_num_probes(896);
+
+
+            std::vector<int32_t> result;
+            cptable->find_k_nearest_neighbors(q, 20, &result);
+
+        }
 
         // Calculate cosine distance between query and data base faces
         std::vector<std::pair<float, size_t> > dists_idxs;

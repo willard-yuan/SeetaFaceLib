@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
     int i = 0;
     for(auto featItem: namesFeats.second){
         // http://stackoverflow.com/questions/2923272/how-to-convert-vector-to-array-c
-        float tmp_cosine_dist = face_recognizer.CalcSimilarity(queryFeat, &featItem[0]);
+        float tmp_cosine_dist = face_recognizer.CalcSimilarity(&namesFeats.second[0][0], &featItem[0]);
         dists_idxs.push_back(std::make_pair(tmp_cosine_dist, i++));
     }
     
