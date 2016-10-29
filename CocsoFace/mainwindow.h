@@ -18,6 +18,9 @@
 #include "face_detection.h"
 #include "face_alignment.h"
 
+#include "falconn/eigen_wrapper.h"
+#include "falconn/lsh_nn_table.h"
+
 #include <qfilesystemmodel.h>
 #include <vector>
 #include <string>
@@ -69,6 +72,11 @@ private:
     std::string path_imgCroppedNames;
 
     extractFeats *featExtractor;
+
+    std::vector<falconn::DenseVector<float>> data;
+    falconn::LSHConstructionParameters params_cp;
+    unique_ptr<falconn::LSHNearestNeighborTable<falconn::DenseVector<float>>> cptable;
+    std::vector<int32_t> idxCandidate;
 
     cv::Mat dst_img;
     string path_namesFeats;

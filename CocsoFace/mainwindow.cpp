@@ -294,7 +294,7 @@ void MainWindow::on_ImgsOpenButton_clicked(bool checked)
         export_folder.setNameFilters(QStringList()<<"*.jpg");
         imgNamesQString = export_folder.entryList();
         // for ( QStringList::Iterator it = imgNamesQString.begin(); it != imgNamesQString.end(); ++it )
-            // qDebug() << "Processed command: " << *it;
+        // qDebug() << "Processed command: " << *it;
         QStringListModel *model = new QStringListModel(this);
         // Populate our model
         model->setStringList(imgNamesQString);
@@ -382,8 +382,6 @@ void MainWindow::on_queryButton_clicked(bool checked)
             int dim = (int)namesFeats.second[0].size();
 
             // Data set parameters
-            int num_queries = 5;           // number of query points
-            double r = std::sqrt(2.0) / 2.0;  // distance to planted query
             uint64_t seed = 119417657;
 
             // Common LSH parameters
@@ -394,7 +392,6 @@ void MainWindow::on_queryButton_clicked(bool checked)
 
             // 转换数据类型
             qDebug() << "Generating data set ...";
-            std::vector<falconn::DenseVector<float>> data;
             for (int ii = 0; ii < numFeats; ++ii) {
                 falconn::DenseVector<float> v = Eigen::VectorXf::Map(&namesFeats.second[ii][0], dim);
                 v.normalize(); // L2归一化
@@ -402,7 +399,6 @@ void MainWindow::on_queryButton_clicked(bool checked)
             }
 
             // Cross polytope hashing
-            LSHConstructionParameters params_cp;
             params_cp.dimension = dim;
             params_cp.lsh_family = LSHFamily::CrossPolytope;
             params_cp.distance_function = distance_function;
@@ -414,23 +410,12 @@ void MainWindow::on_queryButton_clicked(bool checked)
             params_cp.num_setup_threads = num_setup_threads;
             params_cp.seed = seed ^ 833840234;
 
-            unique_ptr<LSHNearestNeighborTable<falconn::DenseVector<float>>> cptable(std::move(construct_table<falconn::DenseVector<float>>(data, params_cp)));
-            cptable->set_num_probes(896);
-
-
-            std::vector<int32_t> result;
-            cptable->find_k_nearest_neighbors(q, 20, &result);
 
         }
-
-        // Calculate cosine distance between query and data base faces
-        std::vector<std::pair<float, size_t> > dists_idxs;
-        int i = 0;
-        for(auto featItem: namesFeats.second){
-            // http://stackoverflow.com/questions/2923272/how-to-convert-vector-to-array-c
-            float tmp_cosine_dist = face_recognizer->CalcSimilarity(query_feat, &featItem[0]);
-            dists_idxs.push_back(std::make_pair(tmp_cosine_dist, i++));
-        }
+        cptable = unique_ptr<falconn::LSHNearestNeighborTable<falconn::DenseVector<float>>>(std::move(construct_table<falconn::DenseVector<float>>(data, params_cp)));
+        cptable->set_num_probes(896);
+        qDebug() << "index build finished ...";
+        cptable->find_k_nearest_neighbors(q, 20, &idxCandidate);
 
         // Sorting will put lower values ahead of larger ones, resolving ties using the original index
         //m_listeWidget->clear();
@@ -439,18 +424,35 @@ void MainWindow::on_queryButton_clicked(bool checked)
         imgs_listeWidget->setIconSize(QSize(200,200));
         imgs_listeWidget->setResizeMode(QListWidget::Adjust);
 
-        std::sort(dists_idxs.begin(), dists_idxs.end());
-        std::reverse(dists_idxs.begin(), dists_idxs.end());
-        for (size_t i = 0 ; i != dists_idxs.size() ; i++) {
-           //qDebug()<<dists_idxs[i].first<<namesFeats.first.at(dists_idxs[i].second).c_str();
-           QString tmpImgName = dir + '/' + namesFeats.first.at(dists_idxs[i].second).c_str();
-           imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(dists_idxs[i].second).c_str())));
+        for (size_t i = 0 ; i != idxCandidate.size() ; i++) {
+            QString tmpImgName = dir + '/' + namesFeats.first.at(idxCandidate[i]).c_str();
+            imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(idxCandidate[i]).c_str())));
         }
+
+        //        // Calculate cosine distance between query and data base faces
+        //        std::vector<std::pair<float, size_t> > dists_idxs;
+        //        int i = 0;
+        //        for(auto featItem: namesFeats.second){
+        //            // http://stackoverflow.com/questions/2923272/how-to-convert-vector-to-array-c
+        //            float tmp_cosine_dist = face_recognizer->CalcSimilarity(query_feat, &featItem[0]);
+        //            dists_idxs.push_back(std::make_pair(tmp_cosine_dist, i++));
+        //        }
+
+        //        std::sort(dists_idxs.begin(), dists_idxs.end());
+        //        std::reverse(dists_idxs.begin(), dists_idxs.end());
+
+        //        for (size_t i = 0 ; i != dists_idxs.size() ; i++) {
+        //           //qDebug()<<dists_idxs[i].first<<namesFeats.first.at(dists_idxs[i].second).c_str();
+        //           QString tmpImgName = dir + '/' + namesFeats.first.at(dists_idxs[i].second).c_str();
+        //           imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(dists_idxs[i].second).c_str())));
+        //        }
 
         ui->previewImg->setPixmap(QPixmap::fromImage(Helper::mat2qimage(img_color)).scaled(320, 240));
         ui->cropImgLabel->setPixmap(QPixmap::fromImage(Helper::mat2qimage(dst_img)).scaled(320, 240));
 
         ui->scrlArea->setWidget(imgs_listeWidget);
+
+        idxCandidate.clear();
     } else {
         qDebug() << "you don't open a query";
     }
