@@ -18,6 +18,8 @@
 #include <QStringListModel>
 #include <QListWidget>
 
+#include <ctime>
+
 #include <src/extractFeats.h>
 
 using namespace seeta;
@@ -366,6 +368,13 @@ void MainWindow::on_queryButton_clicked(bool checked)
         QString path_queryImg = QFileDialog::getOpenFileName(this, "打开图像", QDir::currentPath(), "Document files (*.jpg *.png);;All files(*.*)");
         qDebug()<<"query image:"<<path_queryImg;
 
+        // Sorting will put lower values ahead of larger ones, resolving ties using the original index
+        //m_listeWidget->clear();
+        QListWidget *imgs_listeWidget = new  QListWidget;
+        imgs_listeWidget->setViewMode(QListWidget::IconMode);
+        imgs_listeWidget->setIconSize(QSize(200,200));
+        imgs_listeWidget->setResizeMode(QListWidget::Adjust);
+
         // Calculate cosine distance between query and data base faces
         float query_feat[2048];
         cv::Mat img_color = cv::imread(path_queryImg.toStdString());
@@ -377,7 +386,9 @@ void MainWindow::on_queryButton_clicked(bool checked)
 
         if(namesFeats.first.empty()){
             featExtractor->loadFeaturesFilePair(namesFeats, path_namesFeats);
+            qDebug()<<"first loaded";
 
+            // LSH搜索方案
             int numFeats = (int)namesFeats.first.size();
             int dim = (int)namesFeats.second[0].size();
 
@@ -409,28 +420,37 @@ void MainWindow::on_queryButton_clicked(bool checked)
             params_cp.num_rotations = 2;
             params_cp.num_setup_threads = num_setup_threads;
             params_cp.seed = seed ^ 833840234;
-
+            cptable = unique_ptr<falconn::LSHNearestNeighborTable<falconn::DenseVector<float>>>(std::move(construct_table<falconn::DenseVector<float>>(data, params_cp)));
+            cptable->set_num_probes(896);
+            qDebug() << "index build finished ...";
 
         }
-        cptable = unique_ptr<falconn::LSHNearestNeighborTable<falconn::DenseVector<float>>>(std::move(construct_table<falconn::DenseVector<float>>(data, params_cp)));
-        cptable->set_num_probes(896);
-        qDebug() << "index build finished ...";
+
         cptable->find_k_nearest_neighbors(q, 20, &idxCandidate);
 
-        // Sorting will put lower values ahead of larger ones, resolving ties using the original index
-        //m_listeWidget->clear();
-        QListWidget *imgs_listeWidget = new  QListWidget;
-        imgs_listeWidget->setViewMode(QListWidget::IconMode);
-        imgs_listeWidget->setIconSize(QSize(200,200));
-        imgs_listeWidget->setResizeMode(QListWidget::Adjust);
+        // todo: do reranking
+        std::vector<std::pair<float, size_t> > dists_idxs;
+        int num_reranking = 10;
+        for (int i = 0 ; i < num_reranking ; i++) {
+            float tmp_cosine_dist = q.dot(data[idxCandidate[i]]);
+            dists_idxs.push_back(std::make_pair(tmp_cosine_dist, idxCandidate[i]));
+        }
+
+        std::sort(dists_idxs.begin(), dists_idxs.end());
+        std::reverse(dists_idxs.begin(), dists_idxs.end());
+
+        for(int i = 0 ; i < num_reranking ; i++){
+            idxCandidate.at(i) = (int32_t)dists_idxs[i].second;
+        }
 
         for (size_t i = 0 ; i != idxCandidate.size() ; i++) {
             QString tmpImgName = dir + '/' + namesFeats.first.at(idxCandidate[i]).c_str();
             imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(idxCandidate[i]).c_str())));
         }
 
-        // slow index
+        // 暴力搜索方案
 //        // Calculate cosine distance between query and data base faces
+//        clock_t begin = clock();
 //        std::vector<std::pair<float, size_t> > dists_idxs;
 //        int i = 0;
 //        for(auto featItem: namesFeats.second){
@@ -438,9 +458,11 @@ void MainWindow::on_queryButton_clicked(bool checked)
 //            float tmp_cosine_dist = face_recognizer->CalcSimilarity(query_feat, &featItem[0]);
 //            dists_idxs.push_back(std::make_pair(tmp_cosine_dist, i++));
 //        }
-
 //        std::sort(dists_idxs.begin(), dists_idxs.end());
 //        std::reverse(dists_idxs.begin(), dists_idxs.end());
+//        clock_t end = clock();
+//        double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+//        qDebug()<<"elapsed_secs: " << elapsed_secs;
 
 //        for (size_t i = 0 ; i != dists_idxs.size() ; i++) {
 //            //qDebug()<<dists_idxs[i].first<<namesFeats.first.at(dists_idxs[i].second).c_str();
