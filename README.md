@@ -7,3 +7,10 @@ SeetaFaceLib is copied from [SeetaFaceEngine](https://github.com/seetaface/Seeta
 ### How to build
 
 Coming soon.
+
+### The Functions have been done
+
+- LSH to make fast search
+- reranking
+
+
