@@ -17,6 +17,7 @@
 #include <QDesktopWidget>
 #include <QStringListModel>
 #include <QListWidget>
+#include <QMessageBox>
 
 #include <ctime>
 
@@ -287,10 +288,11 @@ void MainWindow::on_testButton_toggled(bool checked)
     }
 }
 
-void MainWindow::on_ImgsOpenButton_clicked(bool checked)
+void MainWindow::on_ImgsOpenButton_clicked()
 {
-    if(checked){
-        dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    if ( !dir.isNull() )
+    {
         // qDebug() << dir;
         QDir export_folder(dir);
         export_folder.setNameFilters(QStringList()<<"*.jpg");
@@ -302,16 +304,39 @@ void MainWindow::on_ImgsOpenButton_clicked(bool checked)
         model->setStringList(imgNamesQString);
         // Glue model and view together
         ui->listView->setModel(model);
-    } else{
-        qDebug() << "you don't open the image database";
+    }else{
+        QMessageBox::information(NULL, "Title", "请选择图库", QMessageBox::Yes);
     }
+
 }
 
+// listView右键菜单
+void MainWindow::ProvideContextMenu(const QPoint &pos)
+{
+    // Handle global position
+    QPoint globalPos = ui->listView->mapToGlobal(pos);
+
+    // Create menu and insert some actions
+    QMenu myMenu;
+    myMenu.addAction("搜索", this, SLOT(searchSimilarImgs(imgNameSelected)));
+    //myMenu.addAction("删除",  this, SLOT(deleteImg()));
+
+    // Show context menu at handling position
+    myMenu.exec(globalPos);
+}
+
+// to do: 右键菜单添加搜索功能
+void MainWindow::searchSimilarImgs(const QString imgNameSelected)
+{
+    qDebug() << imgNameSelected;
+}
+
+// listView
 void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
-    QString imgName =  dir+'/'+imgNamesQString.at(index.row());
-    qDebug() << imgName;
-    QPixmap img(imgName);
+    imgNameSelected =  dir+'/'+imgNamesQString.at(index.row());
+    qDebug() << imgNameSelected;
+    QPixmap img(imgNameSelected);
     ui->previewImg->setPixmap(img.scaled(200, 200));
 
     QString imgNameCropped =  QString::fromStdString(path_imgCroppedNames)+imgNamesQString.at(index.row());
@@ -323,6 +348,9 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
         m_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName),*it));
     }
     ui->scrlArea->setWidget(m_listeWidget);*/
+
+    ui->listView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->listView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(ProvideContextMenu(QPoint)));
 }
 
 void MainWindow::on_faceDetectionButton_clicked(bool checked)
@@ -362,24 +390,23 @@ void MainWindow::on_faceDetectionButton_clicked(bool checked)
     }
 }
 
-void MainWindow::on_queryButton_clicked(bool checked)
+
+void MainWindow::on_queryButton_clicked()
 {
-    if(checked){
-        QString path_queryImg = QFileDialog::getOpenFileName(this, "打开图像", QDir::currentPath(), "Document files (*.jpg *.png);;All files(*.*)");
-        qDebug()<<"query image:"<<path_queryImg;
+    // Sorting will put lower values ahead of larger ones, resolving ties using the original index
+    QListWidget *imgs_listeWidget = new  QListWidget;
+    imgs_listeWidget->setViewMode(QListWidget::IconMode);
+    imgs_listeWidget->setIconSize(QSize(200,200));
+    imgs_listeWidget->setResizeMode(QListWidget::Adjust);
 
-        // Sorting will put lower values ahead of larger ones, resolving ties using the original index
-        //m_listeWidget->clear();
-        QListWidget *imgs_listeWidget = new  QListWidget;
-        imgs_listeWidget->setViewMode(QListWidget::IconMode);
-        imgs_listeWidget->setIconSize(QSize(200,200));
-        imgs_listeWidget->setResizeMode(QListWidget::Adjust);
+    QString path_queryImg = QFileDialog::getOpenFileName(this, "打开图像", QDir::currentPath(), "Document files (*.jpg *.png);;All files(*.*)");
 
+    if ( !path_queryImg.isNull() )
+    {
         // Calculate cosine distance between query and data base faces
         float query_feat[2048];
         cv::Mat img_color = cv::imread(path_queryImg.toStdString());
         featExtractor->extractFeat(face_detector, point_detector, face_recognizer, img_color, dst_img, query_feat);
-
 
         falconn::DenseVector<float> q = Eigen::VectorXf::Map(&query_feat[0], 2048);
         q.normalize();
@@ -428,7 +455,7 @@ void MainWindow::on_queryButton_clicked(bool checked)
 
         cptable->find_k_nearest_neighbors(q, 20, &idxCandidate);
 
-        // todo: do reranking
+        // do reranking
         std::vector<std::pair<float, size_t> > dists_idxs;
         int num_reranking = 10;
         for (int i = 0 ; i < num_reranking ; i++) {
@@ -449,26 +476,26 @@ void MainWindow::on_queryButton_clicked(bool checked)
         }
 
         // 暴力搜索方案
-//        // Calculate cosine distance between query and data base faces
-//        clock_t begin = clock();
-//        std::vector<std::pair<float, size_t> > dists_idxs;
-//        int i = 0;
-//        for(auto featItem: namesFeats.second){
-//            // http://stackoverflow.com/questions/2923272/how-to-convert-vector-to-array-c
-//            float tmp_cosine_dist = face_recognizer->CalcSimilarity(query_feat, &featItem[0]);
-//            dists_idxs.push_back(std::make_pair(tmp_cosine_dist, i++));
-//        }
-//        std::sort(dists_idxs.begin(), dists_idxs.end());
-//        std::reverse(dists_idxs.begin(), dists_idxs.end());
-//        clock_t end = clock();
-//        double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-//        qDebug()<<"elapsed_secs: " << elapsed_secs;
+        //        // Calculate cosine distance between query and data base faces
+        //        clock_t begin = clock();
+        //        std::vector<std::pair<float, size_t> > dists_idxs;
+        //        int i = 0;
+        //        for(auto featItem: namesFeats.second){
+        //            // http://stackoverflow.com/questions/2923272/how-to-convert-vector-to-array-c
+        //            float tmp_cosine_dist = face_recognizer->CalcSimilarity(query_feat, &featItem[0]);
+        //            dists_idxs.push_back(std::make_pair(tmp_cosine_dist, i++));
+        //        }
+        //        std::sort(dists_idxs.begin(), dists_idxs.end());
+        //        std::reverse(dists_idxs.begin(), dists_idxs.end());
+        //        clock_t end = clock();
+        //        double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+        //        qDebug()<<"elapsed_secs: " << elapsed_secs;
 
-//        for (size_t i = 0 ; i != dists_idxs.size() ; i++) {
-//            //qDebug()<<dists_idxs[i].first<<namesFeats.first.at(dists_idxs[i].second).c_str();
-//            QString tmpImgName = dir + '/' + namesFeats.first.at(dists_idxs[i].second).c_str();
-//            imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(dists_idxs[i].second).c_str())));
-//        }
+        //        for (size_t i = 0 ; i != dists_idxs.size() ; i++) {
+        //            //qDebug()<<dists_idxs[i].first<<namesFeats.first.at(dists_idxs[i].second).c_str();
+        //            QString tmpImgName = dir + '/' + namesFeats.first.at(dists_idxs[i].second).c_str();
+        //            imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(dists_idxs[i].second).c_str())));
+        //        }
 
         ui->previewImg->setPixmap(QPixmap::fromImage(Helper::mat2qimage(img_color)).scaled(320, 240));
         ui->cropImgLabel->setPixmap(QPixmap::fromImage(Helper::mat2qimage(dst_img)).scaled(320, 240));
@@ -476,7 +503,7 @@ void MainWindow::on_queryButton_clicked(bool checked)
         ui->scrlArea->setWidget(imgs_listeWidget);
 
         idxCandidate.clear();
-    } else {
-        qDebug() << "you don't open a query";
+    }else{
+        QMessageBox::information(NULL, "Title", "请选择一张图片", QMessageBox::Yes);
     }
 }

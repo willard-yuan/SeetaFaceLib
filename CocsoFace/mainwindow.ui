@@ -58,13 +58,6 @@ color: rgba(53, 57, 59, 128);</string>
        <height>429</height>
       </rect>
      </property>
-     <zorder>culrrentRadius</zorder>
-     <zorder>radiusMax</zorder>
-     <zorder>similarityLabel</zorder>
-     <zorder>rMaxHorizontalSlider</zorder>
-     <zorder>sameIDtextBrowser</zorder>
-     <zorder>sameID</zorder>
-     <zorder>similaritytextBrowser</zorder>
     </widget>
    </widget>
    <widget class="QGroupBox" name="recordGroup">
@@ -424,25 +417,6 @@ color: rgba(53, 57, 59, 128);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <zorder>videoCanvas</zorder>
-    <zorder>layoutWidget</zorder>
-    <zorder>culrrentRadius</zorder>
-    <zorder>radiusMax</zorder>
-    <zorder>similarityLabel</zorder>
-    <zorder>rMaxHorizontalSlider</zorder>
-    <zorder>sameIDtextBrowser</zorder>
-    <zorder>sameID</zorder>
-    <zorder>similaritytextBrowser</zorder>
-    <zorder>radiusMax</zorder>
-    <zorder>similarityLabel</zorder>
-    <zorder>rMaxHorizontalSlider</zorder>
-    <zorder>sameIDtextBrowser</zorder>
-    <zorder>sameID</zorder>
-    <zorder>similaritytextBrowser</zorder>
-    <zorder>radiusMax_2</zorder>
-    <zorder>ScaleFactorQSlider</zorder>
-    <zorder>culrrentScaleFactorQLabel</zorder>
-    <zorder>cropImgRecLabel</zorder>
    </widget>
    <widget class="QPushButton" name="ImgsOpenButton">
     <property name="geometry">
@@ -454,7 +428,7 @@ color: rgba(53, 57, 59, 128);</string>
      </rect>
     </property>
     <property name="text">
-     <string>打开图库</string>
+     <string>选择图库</string>
     </property>
     <property name="icon">
      <iconset resource="design.qrc">
@@ -506,7 +480,7 @@ color: rgba(53, 57, 59, 128);</string>
      </rect>
     </property>
     <property name="text">
-     <string>搜索</string>
+     <string>上传搜索</string>
     </property>
     <property name="icon">
      <iconset resource="design.qrc">
@@ -604,11 +578,6 @@ color: rgba(53, 57, 59, 128);</string>
       </rect>
      </property>
     </widget>
-    <zorder>cropImgLabel</zorder>
-    <zorder>previewImg</zorder>
-    <zorder>listView</zorder>
-    <zorder>queryButton</zorder>
-    <zorder>faceDetectionButton</zorder>
    </widget>
    <zorder>groupBox</zorder>
    <zorder>recordGroup</zorder>

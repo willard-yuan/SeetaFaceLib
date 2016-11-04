@@ -27,6 +27,8 @@
 
 #include <src/extractFeats.h>
 
+#include<QMenu>
+
 namespace Ui {
 class MainWindow;
 }
@@ -87,6 +89,9 @@ private:
 
     QListWidget *m_listeWidget;
 
+    QMenu *ImagePopUpMenu;
+    QString imgNameSelected;
+
 public slots:
     // general
     void exitClicked();
@@ -99,9 +104,12 @@ private slots:
     void on_testButton_toggled(bool checked);
     void on_listView_clicked(const QModelIndex &index);
     void on_faceDetectionButton_clicked(bool checked);
-    void on_ImgsOpenButton_clicked(bool checked);
-    void on_queryButton_clicked(bool checked);
     void on_ScaleFactorQSlider_valueChanged(int value);
+    void on_queryButton_clicked();
+    void on_ImgsOpenButton_clicked();
+
+    void ProvideContextMenu(const QPoint &pos);
+    void searchSimilarImgs(QString imgNameSelected);
 };
 
 #endif // MAINWINDOW_H
