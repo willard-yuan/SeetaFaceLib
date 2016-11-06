@@ -16,6 +16,7 @@
         <file>image/qt_zh_CN.qm</file>
         <file>image/radio_normal.png</file>
         <file>image/radio_selected.png</file>
+        <file>image/logo.png</file>
         <file>icons/calibrate.png</file>
         <file>icons/heatmap.png</file>
         <file>icons/play.png</file>

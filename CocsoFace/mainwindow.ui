@@ -322,7 +322,7 @@ color: rgba(53, 57, 59, 128);</string>
       <x>10</x>
       <y>300</y>
       <width>181</width>
-      <height>108</height>
+      <height>61</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -779,7 +779,37 @@ color: rgba(53, 57, 59, 128);</string>
      <bool>false</bool>
     </property>
    </widget>
-   <zorder>layoutWidget</zorder>
+   <widget class="QLabel" name="cropImgLabel_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>181</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(200, 200, 200);
+background-image: url(:/image/logo.png);
+border-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(255, 235, 235, 206), stop:0.35 rgba(255, 188, 188, 80), stop:0.4 rgba(255, 162, 162, 80), stop:0.425 rgba(255, 132, 132, 156), stop:0.44 rgba(252, 128, 128, 80), stop:1 rgba(255, 255, 255, 0));
+color: rgba(53, 57, 59, 128);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>scrlArea</zorder>
    <zorder>layoutWidget</zorder>
@@ -795,7 +825,8 @@ color: rgba(53, 57, 59, 128);</string>
    <zorder>culrrentRadius_2</zorder>
    <zorder>radiusMax_4</zorder>
    <zorder>rMaxHorizontalSlider_2</zorder>
-   <zorder></zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>cropImgLabel_2</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="pMenuBar">
