@@ -63,6 +63,9 @@ private:
     int MinFaceSize;
     float ImagePyramidScaleFactor;
 
+    int numKNN;
+    int numReranking;
+
     float gallery_fea[2048];
     float probe_fea[2048];
     seeta::FacialLandmark gallery_points[5];
@@ -87,10 +90,12 @@ private:
     QStringList imgNamesQString;
     QString dir;
 
-    QListWidget *m_listeWidget;
+    QListWidget *imgs_listeWidget;
 
     QMenu *ImagePopUpMenu;
     QString imgNameSelected;
+
+    QMenu *myMenu;
 
 public slots:
     // general
@@ -108,8 +113,12 @@ private slots:
     void on_queryButton_clicked();
     void on_ImgsOpenButton_clicked();
 
-    void ProvideContextMenu(const QPoint &pos);
-    void searchSimilarImgs(QString imgNameSelected);
+    void provideContextMenu(const QPoint &pos);
+    void searchSimilarImgs();
+    void deleteImg();
+    void createActions();
+
+    std::vector<int32_t> do_LSH_search(cv::Mat &img_color);
 };
 
 #endif // MAINWINDOW_H

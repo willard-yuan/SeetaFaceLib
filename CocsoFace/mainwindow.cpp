@@ -4,9 +4,9 @@
 
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+
 #include "face_identification.h"
 #include "recognizer.h"
-
 #include "math_functions.h"
 #include "face_detection.h"
 #include "face_alignment.h"
@@ -55,10 +55,13 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWin
     ui->scrlArea->setWidgetResizable(true);
 
 
-    m_listeWidget = new  QListWidget;
-    m_listeWidget->setViewMode(QListWidget::IconMode);
-    m_listeWidget->setIconSize(QSize(200,200));
-    m_listeWidget->setResizeMode(QListWidget::Adjust);
+    imgs_listeWidget = new  QListWidget;
+    imgs_listeWidget->setViewMode(QListWidget::IconMode);
+    imgs_listeWidget->setIconSize(QSize(105, 120));
+    imgs_listeWidget->setResizeMode(QListWidget::Adjust);
+    imgs_listeWidget->setStyleSheet("QListWidget::item { width: 100; height: 140; font-size: 8pt; border-width: 5px 1px 5px 1px; padding-left: 10px; };"
+                                    "QListView::item::text { font-size: 8pt; border-style: dot-dash; border-width: 5px 1px 5px 1px; border-color: yellow; }");
+    imgs_listeWidget->setMovement(QListView::Static);
 
     this->initForm();
     // timer
@@ -70,7 +73,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// ----------------------初始化主窗体---------------------------------------------
+// 初始化主窗体
 void MainWindow::initForm()
 {
     // 设置皮肤
@@ -106,6 +109,8 @@ void MainWindow::initForm()
     ui->ScaleFactorQSlider->setMaximum(10);
     ui->culrrentScaleFactorQLabel->setText(QString::number(1.0));
 
+    this->numKNN = 50;
+    this->numReranking = 10;
 
     // Initialize face detection model
     face_detector = new seeta::FaceDetection("/Users/willard/codes/cpp/face/SeetaFaceLib/model/seeta_fd_frontal_v1.0.bin");
@@ -217,7 +222,6 @@ void MainWindow::process()
 
 }
 
-// ----------------------------------------------------------------------------
 // general slots
 void MainWindow::exitClicked()
 {
@@ -310,49 +314,77 @@ void MainWindow::on_ImgsOpenButton_clicked()
 
 }
 
-// listView右键菜单
-void MainWindow::ProvideContextMenu(const QPoint &pos)
+// 右键菜单添加搜索功能
+void MainWindow::searchSimilarImgs()
 {
+    imgs_listeWidget->clear();
+
+    cv::Mat img_color = cv::imread(imgNameSelected.toStdString());
+    idxCandidate = do_LSH_search(img_color);
+
+    for (size_t i = 0 ; i != idxCandidate.size() ; i++) {
+        QString tmpImgName = dir + '/' + namesFeats.first.at(idxCandidate[i]).c_str();
+        imgs_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName), QString::fromStdString(namesFeats.first.at(idxCandidate[i]).c_str())));
+    }
+    ui->previewImg->setPixmap(QPixmap::fromImage(Helper::mat2qimage(img_color)).scaled(320, 240));
+    ui->cropImgLabel->setPixmap(QPixmap::fromImage(Helper::mat2qimage(dst_img)).scaled(320, 240));
+
+    ui->scrlArea->setWidget(imgs_listeWidget);
+
+    idxCandidate.clear();
+}
+
+// todo: 右键菜单添加搜索功能
+void MainWindow::deleteImg(){
+    qDebug()<<"hello world";
+}
+
+// 创建动作
+void MainWindow::createActions()
+{
+}
+
+// listView右键菜单添加搜索功能
+void MainWindow::provideContextMenu(const QPoint &pos)
+{
+    QAction *searchAction = new QAction(tr("搜索"), this);
+    searchAction->setObjectName("搜索");
+    connect(searchAction, SIGNAL(triggered()), this, SLOT(searchSimilarImgs()));
+
+    QAction *deleteAction = new QAction(tr("删除"), this);
+    deleteAction->setObjectName("删除");
+    connect(deleteAction, SIGNAL(triggered()), this, SLOT(deleteImg()));
+
+    // Create menu and insert some actions
+    myMenu = new QMenu();
+    myMenu->addAction(searchAction);
+    myMenu->addAction(deleteAction);
+
     // Handle global position
     QPoint globalPos = ui->listView->mapToGlobal(pos);
 
-    // Create menu and insert some actions
-    QMenu myMenu;
-    myMenu.addAction("搜索", this, SLOT(searchSimilarImgs(imgNameSelected)));
-    //myMenu.addAction("删除",  this, SLOT(deleteImg()));
-
     // Show context menu at handling position
-    myMenu.exec(globalPos);
+    myMenu->exec(globalPos);
+    myMenu->close();
 }
 
-// to do: 右键菜单添加搜索功能
-void MainWindow::searchSimilarImgs(const QString imgNameSelected)
-{
-    qDebug() << imgNameSelected;
-}
 
 // listView
 void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
     imgNameSelected =  dir+'/'+imgNamesQString.at(index.row());
-    qDebug() << imgNameSelected;
     QPixmap img(imgNameSelected);
     ui->previewImg->setPixmap(img.scaled(200, 200));
 
-    QString imgNameCropped =  QString::fromStdString(path_imgCroppedNames)+imgNamesQString.at(index.row());
+    QString imgNameCropped =  QString::fromStdString(path_imgCroppedNames) + imgNamesQString.at(index.row());
     QPixmap imgCropped(imgNameCropped);
     ui->cropImgLabel->setPixmap(imgCropped.scaled(200, 200));
 
-    /* for ( QStringList::Iterator it = imgNamesQString.begin(); it != imgNamesQString.end(); ++it ){
-        QString tmpImgName = dir + '/' + *it;
-        m_listeWidget->addItem(new QListWidgetItem(QIcon(tmpImgName),*it));
-    }
-    ui->scrlArea->setWidget(m_listeWidget);*/
-
     ui->listView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->listView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(ProvideContextMenu(QPoint)));
+    connect(ui->listView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(provideContextMenu(QPoint)));
 }
 
+// 提取特征
 void MainWindow::on_faceDetectionButton_clicked(bool checked)
 {
     if(checked){
@@ -390,85 +422,87 @@ void MainWindow::on_faceDetectionButton_clicked(bool checked)
     }
 }
 
+// 搜索模块
+std::vector<int32_t> MainWindow::do_LSH_search(cv::Mat &img_color){
+    // Calculate cosine distance between query and data base faces
+    float query_feat[2048];
+    featExtractor->extractFeat(face_detector, point_detector, face_recognizer, img_color, dst_img, query_feat);
+
+    falconn::DenseVector<float> q = Eigen::VectorXf::Map(&query_feat[0], 2048);
+    q.normalize();
+
+    if(namesFeats.first.empty()){
+        featExtractor->loadFeaturesFilePair(namesFeats, path_namesFeats);
+        qDebug()<<"first loaded";
+
+        // LSH搜索方案
+        int numFeats = (int)namesFeats.first.size();
+        int dim = (int)namesFeats.second[0].size();
+
+        // Data set parameters
+        uint64_t seed = 119417657;
+
+        // Common LSH parameters
+        int num_tables = 8;
+        int num_setup_threads = 0;
+        StorageHashTable storage_hash_table = StorageHashTable::FlatHashTable;
+        DistanceFunction distance_function = DistanceFunction::NegativeInnerProduct;
+
+        // 转换数据类型
+        qDebug() << "Generating data set ...";
+        for (int ii = 0; ii < numFeats; ++ii) {
+            falconn::DenseVector<float> v = Eigen::VectorXf::Map(&namesFeats.second[ii][0], dim);
+            v.normalize(); // L2归一化
+            data.push_back(v);
+        }
+
+        // Cross polytope hashing
+        params_cp.dimension = dim;
+        params_cp.lsh_family = LSHFamily::CrossPolytope;
+        params_cp.distance_function = distance_function;
+        params_cp.storage_hash_table = storage_hash_table;
+        params_cp.k = 2; // 每个哈希表的哈希函数数目
+        params_cp.l = num_tables; // 哈希表数目
+        params_cp.last_cp_dimension = 2;
+        params_cp.num_rotations = 2;
+        params_cp.num_setup_threads = num_setup_threads;
+        params_cp.seed = seed ^ 833840234;
+        cptable = unique_ptr<falconn::LSHNearestNeighborTable<falconn::DenseVector<float>>>(std::move(construct_table<falconn::DenseVector<float>>(data, params_cp)));
+        cptable->set_num_probes(896);
+        qDebug() << "index build finished ...";
+
+    }
+
+    cptable->find_k_nearest_neighbors(q, numKNN, &idxCandidate); // LSH find the K nearest neighbors
+
+    // do reranking
+    std::vector<std::pair<float, size_t> > dists_idxs;
+    for (int i = 0 ; i < numReranking ; i++) {
+        float tmp_cosine_dist = q.dot(data[idxCandidate[i]]);
+        dists_idxs.push_back(std::make_pair(tmp_cosine_dist, idxCandidate[i]));
+    }
+
+    std::sort(dists_idxs.begin(), dists_idxs.end());
+    std::reverse(dists_idxs.begin(), dists_idxs.end());
+
+    for(int i = 0 ; i < numReranking ; i++){
+        idxCandidate.at(i) = (int32_t)dists_idxs[i].second;
+    }
+    return idxCandidate;
+}
+
 
 void MainWindow::on_queryButton_clicked()
 {
-    // Sorting will put lower values ahead of larger ones, resolving ties using the original index
-    QListWidget *imgs_listeWidget = new  QListWidget;
-    imgs_listeWidget->setViewMode(QListWidget::IconMode);
-    imgs_listeWidget->setIconSize(QSize(200,200));
-    imgs_listeWidget->setResizeMode(QListWidget::Adjust);
+    idxCandidate.clear();
+    imgs_listeWidget->clear();
 
     QString path_queryImg = QFileDialog::getOpenFileName(this, "打开图像", QDir::currentPath(), "Document files (*.jpg *.png);;All files(*.*)");
 
     if ( !path_queryImg.isNull() )
     {
-        // Calculate cosine distance between query and data base faces
-        float query_feat[2048];
         cv::Mat img_color = cv::imread(path_queryImg.toStdString());
-        featExtractor->extractFeat(face_detector, point_detector, face_recognizer, img_color, dst_img, query_feat);
-
-        falconn::DenseVector<float> q = Eigen::VectorXf::Map(&query_feat[0], 2048);
-        q.normalize();
-
-        if(namesFeats.first.empty()){
-            featExtractor->loadFeaturesFilePair(namesFeats, path_namesFeats);
-            qDebug()<<"first loaded";
-
-            // LSH搜索方案
-            int numFeats = (int)namesFeats.first.size();
-            int dim = (int)namesFeats.second[0].size();
-
-            // Data set parameters
-            uint64_t seed = 119417657;
-
-            // Common LSH parameters
-            int num_tables = 8;
-            int num_setup_threads = 0;
-            StorageHashTable storage_hash_table = StorageHashTable::FlatHashTable;
-            DistanceFunction distance_function = DistanceFunction::NegativeInnerProduct;
-
-            // 转换数据类型
-            qDebug() << "Generating data set ...";
-            for (int ii = 0; ii < numFeats; ++ii) {
-                falconn::DenseVector<float> v = Eigen::VectorXf::Map(&namesFeats.second[ii][0], dim);
-                v.normalize(); // L2归一化
-                data.push_back(v);
-            }
-
-            // Cross polytope hashing
-            params_cp.dimension = dim;
-            params_cp.lsh_family = LSHFamily::CrossPolytope;
-            params_cp.distance_function = distance_function;
-            params_cp.storage_hash_table = storage_hash_table;
-            params_cp.k = 2; // 每个哈希表的哈希函数数目
-            params_cp.l = num_tables; // 哈希表数目
-            params_cp.last_cp_dimension = 2;
-            params_cp.num_rotations = 2;
-            params_cp.num_setup_threads = num_setup_threads;
-            params_cp.seed = seed ^ 833840234;
-            cptable = unique_ptr<falconn::LSHNearestNeighborTable<falconn::DenseVector<float>>>(std::move(construct_table<falconn::DenseVector<float>>(data, params_cp)));
-            cptable->set_num_probes(896);
-            qDebug() << "index build finished ...";
-
-        }
-
-        cptable->find_k_nearest_neighbors(q, 20, &idxCandidate);
-
-        // do reranking
-        std::vector<std::pair<float, size_t> > dists_idxs;
-        int num_reranking = 10;
-        for (int i = 0 ; i < num_reranking ; i++) {
-            float tmp_cosine_dist = q.dot(data[idxCandidate[i]]);
-            dists_idxs.push_back(std::make_pair(tmp_cosine_dist, idxCandidate[i]));
-        }
-
-        std::sort(dists_idxs.begin(), dists_idxs.end());
-        std::reverse(dists_idxs.begin(), dists_idxs.end());
-
-        for(int i = 0 ; i < num_reranking ; i++){
-            idxCandidate.at(i) = (int32_t)dists_idxs[i].second;
-        }
+        idxCandidate = do_LSH_search(img_color);
 
         for (size_t i = 0 ; i != idxCandidate.size() ; i++) {
             QString tmpImgName = dir + '/' + namesFeats.first.at(idxCandidate[i]).c_str();
@@ -499,11 +533,9 @@ void MainWindow::on_queryButton_clicked()
 
         ui->previewImg->setPixmap(QPixmap::fromImage(Helper::mat2qimage(img_color)).scaled(320, 240));
         ui->cropImgLabel->setPixmap(QPixmap::fromImage(Helper::mat2qimage(dst_img)).scaled(320, 240));
-
         ui->scrlArea->setWidget(imgs_listeWidget);
-
-        idxCandidate.clear();
-    }else{
+    }
+    else{
         QMessageBox::information(NULL, "Title", "请选择一张图片", QMessageBox::Yes);
     }
 }

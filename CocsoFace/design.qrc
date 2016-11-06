@@ -33,5 +33,8 @@
         <file>icons/video.png</file>
         <file>icons/calibrate1.png</file>
         <file>icons/tracking.png</file>
+        <file>icons/galaxyImgs.png</file>
+        <file>icons/db.png</file>
+        <file>icons/upload.png</file>
     </qresource>
 </RCC>
