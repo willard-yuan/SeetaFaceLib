@@ -497,7 +497,7 @@ void MainWindow::on_queryButton_clicked()
     idxCandidate.clear();
     imgs_listeWidget->clear();
 
-    QString path_queryImg = QFileDialog::getOpenFileName(this, "打开图像", QDir::currentPath(), "Document files (*.jpg *.png);;All files(*.*)");
+    QString path_queryImg = QFileDialog::getOpenFileName(this, "选择图像", QDir::currentPath(), "Document files (*.jpg *.png);;All files(*.*)");
 
     if ( !path_queryImg.isNull() )
     {
