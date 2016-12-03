@@ -8,6 +8,11 @@ SeetaFaceLib是一个以[SeetaFaceEngine](https://github.com/seetaface/SeetaFace
 
 <p align="center"><img src="http://i300.photobucket.com/albums/nn17/willard-yuan/demo_zpsvuygqatm.png" alt="CocsoFace"/></p>
 
+### 目录结构
+
+`CocsoFace`: 该目录下是QT工程
+`FaceLib`: SeetaFaceEnine的三个部件文件
+`XcodePro`: Xcode工程，便于开发(个人开发的思路是这样的，先在Xcode里面完成功能，然后将开发的功能添加到QT工程里面)
 
 ### 安装
 
