@@ -1035,14 +1035,13 @@
 				GCC_C_LANGUAGE_STANDARD = c11;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
-					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceAlignment/include,
-					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceDetection/include,
-					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceIdentification/include,
+					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceAlignment/include,
+					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceDetection/include,
+					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceIdentification/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/lib,
-					"$(PROJECT_DIR)",
-					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceIdentification/lib,
+					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceIdentification/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1057,14 +1056,13 @@
 				GCC_OPTIMIZATION_LEVEL = fast;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
-					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceAlignment/include,
-					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceDetection/include,
-					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceIdentification/include,
+					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceAlignment/include,
+					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceDetection/include,
+					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceIdentification/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/lib,
-					"$(PROJECT_DIR)",
-					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceIdentification/lib,
+					/Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceIdentification/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
