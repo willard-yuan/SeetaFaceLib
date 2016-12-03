@@ -11,6 +11,14 @@ SeetaFaceLib是一个以[SeetaFaceEngine](https://github.com/seetaface/SeetaFace
 
 ### 安装
 
+SeetaFaceLib依赖[SeetaFaceEngine](https://github.com/seetaface/SeetaFaceEngine)、[Falconn](https://github.com/FALCONN-LIB/FALCONN)、OpenCV以及Boost，其中SeetaFaceEngine以及Falconn已经包含进来的，所以只需要安装OpenCV和Boost了。注意对于非Mac用户，`FaceLib/FaceIdentification/lib/libviplnet.4.5.dylib`中的`libviplnet.4.5.dylib`需要单独进入`FaceLib/FaceIdentification/`中进行编译，编译命令如下：
+
+```sh
+mkdir build
+cd build
+cmake .. && make
+```
+
 
 ### License
 

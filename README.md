@@ -9,7 +9,7 @@ SeetaFaceLib is a face image retrieval system based on [SeetaFaceEngine](https:/
 
 ## Installation
 
-The package of the SeetaFaceLib requires [SeetaFaceEngine]((https://github.com/seetaface/SeetaFaceEngine)) and [Falconn](https://github.com/FALCONN-LIB/FALCONN), and it has been tested on Mac OSX. SeetaFaceEngine is included in the SeetaFaceLib, so you just need Falconn package. Besides, you need a QT environment to run the QT project.
+The package of the SeetaFaceLib requires [SeetaFaceEngine]((https://github.com/seetaface/SeetaFaceEngine)), [Falconn](https://github.com/FALCONN-LIB/FALCONN) and Boost, and it has been tested on Mac OSX. SeetaFaceEngine and Falconn are included in the SeetaFaceLib, so you just need to install Boost. Besides, you need a QT environment to run the QT project.
 
 ## Technical
 
