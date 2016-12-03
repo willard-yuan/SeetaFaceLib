@@ -45,24 +45,27 @@ FORMS    += \
 
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.10
 
+# OpenCV include
 INCLUDEPATH += /usr/local/include/opencv
 INCLUDEPATH += /usr/local/include/opencv2
+
+# Boost include
 INCLUDEPATH += /usr/local/include
 
-# face include
+# Face include
 INCLUDEPATH += ../FaceLib/FaceAlignment/include
 INCLUDEPATH += ../FaceLib/FaceDetection/include
 INCLUDEPATH += ../FaceLib/FaceIdentification/include
 
-# falconn include
-INCLUDEPATH += /Users/willard/codes/cpp/cbir/FALCONN/src/include
+# Falconn include
+INCLUDEPATH += ../3rd/FALCONN/src/include
 
-# eigen include
-INCLUDEPATH += /Users/willard/codes/cpp/cbir/FALCONN/external/eigen
+# Eigen include
+INCLUDEPATH += ../3rd/FALCONN/external/eigen
 
 LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_video -lopencv_photo -lboost_iostreams -lboost_serialization
 
-# face lib
+# Face lib, need to set the full path
 LIBS += /Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceIdentification/lib/libviplnet.4.5.dylib
 
 RESOURCES += design.qrc
