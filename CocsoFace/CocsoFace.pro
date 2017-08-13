@@ -15,6 +15,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = CocsoFace
 TEMPLATE = app
 
+QMAKE_MAC_SDK = macosx10.12
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     videohandler.cpp \
@@ -43,7 +45,7 @@ HEADERS  += mainwindow.h \
 FORMS    += \
     mainwindow.ui
 
-QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.10
+@QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
 
 # OpenCV include
 INCLUDEPATH += /usr/local/include/opencv

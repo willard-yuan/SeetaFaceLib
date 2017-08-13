@@ -6,7 +6,7 @@
 
 SeetaFaceLib是一个以[SeetaFaceEngine](https://github.com/seetaface/SeetaFaceEngine)为基础建立起来的人脸检索系统，目前QT工程中GUI的界面设计界面如下：
 
-<p align="center"><img src="http://i300.photobucket.com/albums/nn17/willard-yuan/demo_zpsvuygqatm.png" alt="CocsoFace"/></p>
+<p align="center"><img src="http://ose5hybez.bkt.clouddn.com/github/faceRetrieval.jpg" alt="CocsoFace"/></p>
 
 ### 目录结构
 
@@ -24,7 +24,20 @@ cd build
 cmake .. && make
 ```
 
-
 ### License
 
-SeetaFace Detection is released under the [BSD 2-Clause license](../LICENSE).
+SeetaFace Detection is released under the [BSD 2-Clause license](../LICENSE
+
+### Troubleshooting
+
+1. 编译后在执行时，如果出现`Using on OS X: 'Symbol not found: __cg_jpeg_resync_to_restart'`，执行：
+
+```sh
+cd /usr/local/lib
+mv libjpeg.dylib libjpeg.dylib.backup
+ln -s /System/Library/Frameworks/ImageIO.framework/Resources/libJPEG.dylib libJPEG.dylib
+mv libtiff.dylib libtiff.dylib.backup
+ln -s /System/Library/Frameworks/ImageIO.framework/Resources/libTIFF.dylib libTIFF.dylib
+mv libpng.dylib libpng.dylib.backup
+ln -s /System/Library/Frameworks/ImageIO.framework/Resources/libPng.dylib libPNG.dylib
+```
