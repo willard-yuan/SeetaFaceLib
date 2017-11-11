@@ -1,8 +1,5 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2016-05-15T08:52:04
-#
-#-------------------------------------------------
+# Author: yongyuan.name
+
 
 QT       += core gui
 
@@ -12,10 +9,10 @@ QMAKE_CXXFLAGS += -msse -msse2 -msse3 -mssse3
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+QMAKE_MAC_SDK = macosx10.13
+
 TARGET = CocsoFace
 TEMPLATE = app
-
-QMAKE_MAC_SDK = macosx10.12
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -45,14 +42,14 @@ HEADERS  += mainwindow.h \
 FORMS    += \
     mainwindow.ui
 
-@QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+#QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.10
+
+# Boost include
+INCLUDEPATH += /usr/local/include
 
 # OpenCV include
 INCLUDEPATH += /usr/local/include/opencv
 INCLUDEPATH += /usr/local/include/opencv2
-
-# Boost include
-INCLUDEPATH += /usr/local/include
 
 # Face include
 INCLUDEPATH += ../FaceLib/FaceAlignment/include
@@ -65,7 +62,7 @@ INCLUDEPATH += ../3rd/FALCONN/src/include
 # Eigen include
 INCLUDEPATH += ../3rd/FALCONN/external/eigen
 
-LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_video -lopencv_photo -lboost_iostreams -lboost_serialization
+LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_videoio -lopencv_imgcodecs -lopencv_video -lopencv_photo -lboost_iostreams -lboost_serialization
 
 # Face lib, need to set the full path
 LIBS += /Users/willard/codes/cpp/face/SeetaFaceLib/FaceLib/FaceIdentification/lib/libviplnet.4.5.dylib
