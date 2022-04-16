@@ -10,7 +10,7 @@ SeetaFaceLib is a face image retrieval system based on [SeetaFaceEngine](https:/
 <p align="center"><img src="http://ose5hybez.bkt.clouddn.com/github/faceRetrieval.jpg" alt="CocsoFace"/></p>
 
 <div align="center">
-  <img width="80%" alt="SSCD diagram" src=".doc/faceRetrieval.jpg">
+  <img width="80%" alt="face retrieval diagram" src=".doc/faceRetrieval.jpg">
 </div>
 
 ## Installation
