@@ -41,3 +41,9 @@ ln -s /System/Library/Frameworks/ImageIO.framework/Resources/libTIFF.dylib libTI
 mv libpng.dylib libpng.dylib.backup
 ln -s /System/Library/Frameworks/ImageIO.framework/Resources/libPng.dylib libPNG.dylib
 ```
+
+若在使用过程中出现任何问题，请在赞赏留言中留下您的微信，收到消息后我会尽快修复。
+
+<div align="left">
+  <img width="20%" alt="A small reward is highly appreciated! (#^.^#) Thank you~" src="https://github.com/willard-yuan/willard-yuan.github.io/blob/master/images/payimg/weipayimg.jpg">
+</div>
