@@ -24,10 +24,6 @@ cd build
 cmake .. && make
 ```
 
-### License
-
-SeetaFace Detection is released under the [BSD 2-Clause license](../LICENSE
-
 ### Troubleshooting
 
 1. 编译后在执行时，如果出现`Using on OS X: 'Symbol not found: __cg_jpeg_resync_to_restart'`，执行：
@@ -41,6 +37,8 @@ ln -s /System/Library/Frameworks/ImageIO.framework/Resources/libTIFF.dylib libTI
 mv libpng.dylib libpng.dylib.backup
 ln -s /System/Library/Frameworks/ImageIO.framework/Resources/libPng.dylib libPNG.dylib
 ```
+
+#### Note
 
 若在使用过程中出现任何问题，请在赞赏留言中留下您的微信，收到消息后我会尽快修复。
 
