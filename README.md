@@ -7,10 +7,8 @@
 ## Introduction
 SeetaFaceLib is a face image retrieval system based on [SeetaFaceEngine](https://github.com/seetaface/SeetaFaceEngine). The GUI of the QT project is designed as follows:
 
-<p align="center"><img src="http://ose5hybez.bkt.clouddn.com/github/faceRetrieval.jpg" alt="CocsoFace"/></p>
-
 <div align="center">
-  <img width="80%" alt="face retrieval diagram" src=".doc/faceRetrieval.jpg">
+  <img width="80%" alt="face retrieval diagram" src="doc/faceRetrieval.jpg">
 </div>
 
 ## Installation
